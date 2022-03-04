@@ -1,5 +1,5 @@
-<div class="earnings">
-  <div class="earnings__list">
+<div nz-row>
+  <div nz-col nzSpan="16">
     <nz-table
       #basicTable
       [nzData]="earnings"
@@ -8,31 +8,31 @@
       (nzPageIndexChange)="onPaginate($event)"
     >
       <thead>
-        <tr>
-          <th></th>
-          <th>Date</th>
-          <th>Type</th>
-          <th>Name</th>
-          <th>Amount</th>
-          <th>Location</th>
-        </tr>
+      <tr>
+        <th></th>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Location</th>
+      </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let data of basicTable.data; let i = index">
-          <td>{{getCurrentOrder(i + 1)}}</td>
-          <td>{{ data.date | date:'YYYY-MM-dd' }}</td>
-          <td class="type">
-            <nz-tag *ngIf="data.type === 'in'" nzColor="success">{{data.type}}</nz-tag>
-            <nz-tag *ngIf="data.type === 'out'" nzColor="error">{{data.type}}</nz-tag>
-          </td>
-          <td>{{data.name}}</td>
-          <td class="amount">{{data.amount | currency:'₱'}}</td>
-          <td>{{data.location}}</td>
-        </tr>
+      <tr *ngFor="let data of basicTable.data; let i = index">
+        <td>{{getCurrentOrder(i + 1)}}</td>
+        <td>{{ data.date | date:'YYYY-MM-dd' }}</td>
+        <td class="type">
+          <nz-tag *ngIf="data.type === 'in'" nzColor="success">{{data.type}}</nz-tag>
+          <nz-tag *ngIf="data.type === 'out'" nzColor="error">{{data.type}}</nz-tag>
+        </td>
+        <td>{{data.name}}</td>
+        <td class="amount">{{data.amount | currency:'₱'}}</td>
+        <td>{{data.location}}</td>
+      </tr>
       </tbody>
     </nz-table>
   </div>
-  <div class="earnings__controls">
+  <div class="earnings__form" nz-col nzSpan="8">
     <form [formGroup]="earningForm" (ngSubmit)="onSubmit()">
       <div class="form__item">
         <label class="form__label">Date</label>

@@ -12,6 +12,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
     NzInputModule,
     NzAutocompleteModule,
     NzSelectModule,
-    NzTagModule
+    NzTagModule,
+    NzGridModule
   ]
 })
 export class EarningsModule { }
