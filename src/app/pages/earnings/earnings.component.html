@@ -21,7 +21,10 @@
         <tr *ngFor="let data of basicTable.data; let i = index">
           <td>{{getCurrentOrder(i + 1)}}</td>
           <td>{{ data.date | date:'YYYY-MM-dd' }}</td>
-          <td [ngClass]="data.type">{{data.type}}</td>
+          <td class="type">
+            <nz-tag *ngIf="data.type === 'in'" nzColor="success">{{data.type}}</nz-tag>
+            <nz-tag *ngIf="data.type === 'out'" nzColor="error">{{data.type}}</nz-tag>
+          </td>
           <td>{{data.name}}</td>
           <td class="amount">{{data.amount | currency:'₱'}}</td>
           <td>{{data.location}}</td>

@@ -11,6 +11,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzDatePickerModule,
     NzInputModule,
     NzAutocompleteModule,
-    NzSelectModule
+    NzSelectModule,
+    NzTagModule
   ]
 })
 export class EarningsModule { }

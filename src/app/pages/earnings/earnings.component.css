@@ -40,14 +40,7 @@ nz-date-picker, nz-select {
   text-align: right;
 }
 
-.in {
+.type {
   text-transform: uppercase;
-  color: green;
-  font-weight: 700;
-}
-
-.out {
-  text-transform: uppercase;
-  color: red;
   font-weight: 700;
 }
