@@ -1,0 +1,83 @@
+<div class="earnings">
+  <div class="earnings__list">
+    <nz-table
+      #basicTable
+      [nzData]="earnings"
+      [nzLoading]="isFetchingEarnings"
+      [nzHideOnSinglePage]="true"
+      (nzPageIndexChange)="onPaginate($event)"
+    >
+      <thead>
+        <tr>
+          <th></th>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data; let i = index">
+          <td>{{getCurrentOrder(i + 1)}}</td>
+          <td>{{ data.date | date:'YYYY-MM-dd' }}</td>
+          <td [ngClass]="data.type">{{data.type}}</td>
+          <td>{{data.name}}</td>
+          <td class="amount">{{data.amount | currency:'₱'}}</td>
+          <td>{{data.location}}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+  <div class="earnings__controls">
+    <form [formGroup]="earningForm" (ngSubmit)="onSubmit()">
+      <div class="form__item">
+        <label class="form__label">Date</label>
+        <div class="form__input">
+          <nz-date-picker [nzId]="'date'" formControlName="date"></nz-date-picker>
+        </div>
+      </div>
+      <div class="form__item">
+        <label class="form__label">Type</label>
+        <div class="form__input">
+          <nz-select formControlName="type" (ngModelChange)="onChangeType($event)" nzShowSearch nzAllowClear nzPlaceHolder="Select a type">
+            <nz-option nzLabel="in" nzValue="in"></nz-option>
+            <nz-option nzLabel="out" nzValue="out"></nz-option>
+          </nz-select>
+        </div>
+      </div>
+      <div class="form__item">
+        <label class="form__label">Name</label>
+        <div class="form__input">
+          <input
+            placeholder="Name"
+            formControlName="name"
+            nz-input
+            [nzAutocomplete]="auto"
+          />
+          <nz-autocomplete [nzDataSource]="names" #auto></nz-autocomplete>
+        </div>
+      </div>
+      <div class="form__item">
+        <label class="form__label">Amount</label>
+        <div class="form__input">
+          <input nz-input formControlName="amount" placeholder="Amount" />
+        </div>
+      </div>
+      <div class="form__item">
+        <label class="form__label">Location</label>
+        <div class="form__input">
+          <nz-select formControlName="location" nzShowSearch nzAllowClear nzPlaceHolder="Select a location">
+            <nz-option nzLabel="Bank" nzValue="Bank"></nz-option>
+            <nz-option nzLabel="Onhand" nzValue="Onhand"></nz-option>
+          </nz-select>
+        </div>
+      </div>
+      <div class="form__item">
+        <div class="form__input">
+          <button nz-button nzBlock nzType="primary">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
