@@ -14,11 +14,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 
-
 @NgModule({
-  declarations: [
-    EarningsComponent
-  ],
+  declarations: [EarningsComponent],
   imports: [
     CommonModule,
     EarningsRoutingModule,
@@ -35,4 +32,4 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
     NzGridModule
   ]
 })
-export class EarningsModule { }
+export class EarningsModule {}

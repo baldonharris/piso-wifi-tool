@@ -8,27 +8,27 @@
       (nzPageIndexChange)="onPaginate($event)"
     >
       <thead>
-      <tr>
-        <th></th>
-        <th>Date</th>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Amount</th>
-        <th>Location</th>
-      </tr>
+        <tr>
+          <th></th>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Location</th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let data of basicTable.data; let i = index">
-        <td>{{getCurrentOrder(i + 1)}}</td>
-        <td>{{ data.date | date:'YYYY-MM-dd' }}</td>
-        <td class="type">
-          <nz-tag *ngIf="data.type === 'in'" nzColor="success">{{data.type}}</nz-tag>
-          <nz-tag *ngIf="data.type === 'out'" nzColor="error">{{data.type}}</nz-tag>
-        </td>
-        <td>{{data.name}}</td>
-        <td class="amount">{{data.amount | currency:'₱'}}</td>
-        <td>{{data.location}}</td>
-      </tr>
+        <tr *ngFor="let data of basicTable.data; let i = index">
+          <td>{{ getCurrentOrder(i + 1) }}</td>
+          <td>{{ data.date | date: 'YYYY-MM-dd' }}</td>
+          <td class="type">
+            <nz-tag *ngIf="data.type === 'in'" nzColor="success">{{ data.type }}</nz-tag>
+            <nz-tag *ngIf="data.type === 'out'" nzColor="error">{{ data.type }}</nz-tag>
+          </td>
+          <td>{{ data.name }}</td>
+          <td class="amount">{{ data.amount | currency: '₱' }}</td>
+          <td>{{ data.location }}</td>
+        </tr>
       </tbody>
     </nz-table>
   </div>
@@ -43,7 +43,13 @@
       <div class="form__item">
         <label class="form__label">Type</label>
         <div class="form__input">
-          <nz-select formControlName="type" (ngModelChange)="onChangeType($event)" nzShowSearch nzAllowClear nzPlaceHolder="Select a type">
+          <nz-select
+            formControlName="type"
+            (ngModelChange)="onChangeType($event)"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Select a type"
+          >
             <nz-option nzLabel="in" nzValue="in"></nz-option>
             <nz-option nzLabel="out" nzValue="out"></nz-option>
           </nz-select>
@@ -52,12 +58,7 @@
       <div class="form__item">
         <label class="form__label">Name</label>
         <div class="form__input">
-          <input
-            placeholder="Name"
-            formControlName="name"
-            nz-input
-            [nzAutocomplete]="auto"
-          />
+          <input placeholder="Name" formControlName="name" nz-input [nzAutocomplete]="auto" />
           <nz-autocomplete [nzDataSource]="names" #auto></nz-autocomplete>
         </div>
       </div>

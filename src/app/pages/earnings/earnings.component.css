@@ -18,7 +18,8 @@
   text-align: left;
 }
 
-nz-date-picker, nz-select {
+nz-date-picker,
+nz-select {
   display: block;
 }
 

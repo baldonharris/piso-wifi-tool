@@ -18,7 +18,6 @@ interface Earning {
   styleUrls: ['./earnings.component.css']
 })
 export class EarningsComponent implements OnInit {
-
   earningForm = new FormGroup({
     date: new FormControl(''),
     name: new FormControl(''),
@@ -29,18 +28,14 @@ export class EarningsComponent implements OnInit {
 
   names: string[] = [];
 
-  investors: string[] = [
-    ... environment.investors
-  ];
+  investors: string[] = [...environment.investors];
 
   currentPage: number = 1;
   isFetchingEarnings: boolean = true;
   isSubmitting: boolean = false;
   earnings: Earning[] = [];
 
-  constructor(
-    private httpClient: HttpClient
-  ) { }
+  constructor(private httpClient: HttpClient) {}
 
   ngOnInit(): void {
     this.fetchEarnings();
@@ -48,33 +43,27 @@ export class EarningsComponent implements OnInit {
 
   private fetchEarnings() {
     this.isFetchingEarnings = true;
-    this.httpClient.get(environment.firebase.earnings)
-      .subscribe((earnings) => {
-        this.earnings = [];
-        if (earnings) {
-          for (const [key, value] of Object.entries(earnings)) {
-            value.amount = Number(value.amount);
+    this.httpClient.get(environment.firebase.earnings).subscribe((earnings) => {
+      this.earnings = [];
+      if (earnings) {
+        for (const [key, value] of Object.entries(earnings)) {
+          value.amount = Number(value.amount);
 
-            this.earnings.push({ ... {id: key}, ... value });
-          }
-
-          // @ts-ignore
-          this.earnings.sort((a, b) => (new Date(b.date) - new Date(a.date)));
+          this.earnings.push({ ...{ id: key }, ...value });
         }
-        this.isFetchingEarnings = false;
-      });
+
+        // @ts-ignore
+        this.earnings.sort((a, b) => new Date(b.date) - new Date(a.date));
+      }
+      this.isFetchingEarnings = false;
+    });
   }
 
   onChangeType(type: string) {
     if (type === 'out') {
-      this.names = [
-        ... environment.investors
-      ];
+      this.names = [...environment.investors];
     } else {
-      this.names = [
-        ... environment.earnings,
-        ... Object.keys(environment.components)
-      ];
+      this.names = [...environment.earnings, ...Object.keys(environment.components)];
     }
   }
 
@@ -84,16 +73,14 @@ export class EarningsComponent implements OnInit {
 
   onSubmit() {
     this.isSubmitting = true;
-    this.httpClient.post(environment.firebase.earnings, this.earningForm.value)
-      .subscribe((r) => {
-        this.fetchEarnings();
-        this.earningForm.reset();
-        this.isSubmitting = false;
-      });
+    this.httpClient.post(environment.firebase.earnings, this.earningForm.value).subscribe((r) => {
+      this.fetchEarnings();
+      this.earningForm.reset();
+      this.isSubmitting = false;
+    });
   }
 
   getCurrentOrder(index: number) {
-    return index + ((this.currentPage - 1) * 10);
+    return index + (this.currentPage - 1) * 10;
   }
-
 }
