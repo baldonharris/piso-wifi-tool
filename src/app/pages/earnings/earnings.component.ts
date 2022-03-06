@@ -28,8 +28,6 @@ export class EarningsComponent implements OnInit {
 
   names: string[] = [];
 
-  investors: string[] = [...environment.investors];
-
   currentPage: number = 1;
   isFetchingEarnings: boolean = true;
   isSubmitting: boolean = false;

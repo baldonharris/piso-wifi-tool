@@ -55,12 +55,12 @@ nz-header > * {
 
 nz-content {
   padding: 50px;
+  overflow: auto;
 }
 
 .inner-content {
   padding: 24px;
   background: #fff;
-  height: 100%;
 }
 
 nz-footer {

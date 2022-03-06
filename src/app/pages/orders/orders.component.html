@@ -1,0 +1,107 @@
+<form [formGroup]="orderForm">
+  <div nz-row [nzGutter]="30">
+    <div nz-col nzSpan="12" id="items-column">
+      <nz-empty *ngIf="items.controls.length === 0" [nzNotFoundContent]="null"></nz-empty>
+      <div formArrayName="items" *ngFor="let control of items.controls; let i = index">
+        <div [formGroupName]="i">
+          <div class="form__item">
+            <label class="form__label">Item</label>
+            <div class="form__input">
+              <input [nzAutocomplete]="item" nz-input formControlName="item" placeholder="Item" />
+              <nz-autocomplete [nzDataSource]="components" #item></nz-autocomplete>
+            </div>
+          </div>
+          <div class="form__item">
+            <label class="form__label">Price</label>
+            <div class="form__input">
+              <input nz-input formControlName="price" placeholder="Price" />
+            </div>
+          </div>
+          <div class="form__item">
+            <label class="form__label">Quantity</label>
+            <div class="form__input">
+              <input nz-input formControlName="quantity" placeholder="Quantity" />
+            </div>
+          </div>
+          <div class="form__item">
+            <label class="form__label">Cost</label>
+            <div class="form__input">
+              <input nz-input formControlName="cost" placeholder="Cost" [readonly]="true" />
+            </div>
+          </div>
+          <div class="form__item">
+            <label class="form__label">Shipping Fee</label>
+            <div class="form__input">
+              <input nz-input formControlName="shipping_fee" placeholder="Shipping Fee" [readonly]="true" />
+            </div>
+          </div>
+          <div class="form__item">
+            <label class="form__label">Paid In Behalf Amount</label>
+            <div class="form__input">
+              <input nz-input formControlName="paid_in_behalf_amount" placeholder="Paid In Behalf Amount" [readonly]="true" />
+            </div>
+          </div>
+          <div class="form__item">
+            <label class="form__label">Subtotal</label>
+            <div class="form__input">
+              <input nz-input formControlName="subtotal" placeholder="Subtotal" [readonly]="true" />
+            </div>
+          </div>
+          <div class="form__item">
+            <label class="form__label">Total</label>
+            <div class="form__input">
+              <input nz-input formControlName="total" placeholder="Total" [readonly]="true" />
+            </div>
+          </div>
+          <nz-divider *ngIf="items.controls.length - 1 !== i" nzType="horizontal"></nz-divider>
+        </div>
+      </div>
+    </div>
+    <div nz-col nzSpan="12">
+      <div class="form__item form__item--override form__item--block">
+        <label class="form__label">Paid By</label>
+        <div class="form__input">
+          <input nz-input [nzAutocomplete]="paid_by" formControlName="paid_by" placeholder="Paid By" />
+          <nz-autocomplete [nzDataSource]="investors" #paid_by></nz-autocomplete>
+        </div>
+      </div>
+      <div>
+        <div class="form__item">
+          <label class="form__label">Date Ordered</label>
+          <div class="form__input">
+            <nz-date-picker [nzId]="'date_ordered'" formControlName="date_ordered"></nz-date-picker>
+          </div>
+        </div>
+        <div class="form__item">
+          <label class="form__label">Shipping Fee</label>
+          <div class="form__input">
+            <input nz-input formControlName="shipping_fee" placeholder="Shipping Fee" />
+          </div>
+        </div>
+        <div class="form__item">
+          <label class="form__label">Paid In Behalf By</label>
+          <div class="form__input">
+            <input nz-input [nzAutocomplete]="paid_in_behalf_by" formControlName="paid_in_behalf_by" placeholder="Paid In Behalf By" />
+            <nz-autocomplete [nzDataSource]="investors" #paid_in_behalf_by></nz-autocomplete>
+          </div>
+        </div>
+        <div class="form__item">
+          <label class="form__label">Paid In Behalf Amount</label>
+          <div class="form__input">
+            <input nz-input formControlName="paid_in_behalf_amount" placeholder="Paid In Behalf Amount" />
+          </div>
+        </div>
+        <div class="form__item">
+          <div class="form__input">
+            <button (click)="onAddItem()" class="ant-btn ant-btn-primary" appBlock>Add Item</button>
+          </div>
+        </div>
+        <div class="form__item">
+          <div class="form__input">
+            <button class="ant-btn ant-btn-primary" appBlock>Place Order</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
