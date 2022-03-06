@@ -10,7 +10,10 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class OrdersComponent implements OnInit {
 
-  investors: string[] = [...environment.investors];
+  investors: string[] = [
+    'Earnings',
+    ...environment.investors,
+  ];
   components: string[] = Object.keys(environment.components);
 
   orderForm: FormGroup = this.fb.group({
