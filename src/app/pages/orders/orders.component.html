@@ -38,7 +38,12 @@
           <div class="form__item">
             <label class="form__label">Paid In Behalf Amount</label>
             <div class="form__input">
-              <input nz-input formControlName="paid_in_behalf_amount" placeholder="Paid In Behalf Amount" [readonly]="true" />
+              <input
+                nz-input
+                formControlName="paid_in_behalf_amount"
+                placeholder="Paid In Behalf Amount"
+                [readonly]="true"
+              />
             </div>
           </div>
           <div class="form__item">
@@ -81,7 +86,12 @@
         <div class="form__item">
           <label class="form__label">Paid In Behalf By</label>
           <div class="form__input">
-            <input nz-input [nzAutocomplete]="paid_in_behalf_by" formControlName="paid_in_behalf_by" placeholder="Paid In Behalf By" />
+            <input
+              nz-input
+              [nzAutocomplete]="paid_in_behalf_by"
+              formControlName="paid_in_behalf_by"
+              placeholder="Paid In Behalf By"
+            />
             <nz-autocomplete [nzDataSource]="investors" #paid_in_behalf_by></nz-autocomplete>
           </div>
         </div>

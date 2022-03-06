@@ -14,11 +14,8 @@ import { DirectivesModule } from '../../directives/directives.module';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 
-
 @NgModule({
-  declarations: [
-    OrdersComponent
-  ],
+  declarations: [OrdersComponent],
   imports: [
     CommonModule,
     OrdersRoutingModule,
@@ -35,4 +32,4 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
     NzEmptyModule
   ]
 })
-export class OrdersModule { }
+export class OrdersModule {}

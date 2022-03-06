@@ -9,11 +9,7 @@ import { debounceTime } from 'rxjs/operators';
   styleUrls: ['./orders.component.css']
 })
 export class OrdersComponent implements OnInit {
-
-  investors: string[] = [
-    'Earnings',
-    ...environment.investors,
-  ];
+  investors: string[] = ['Earnings', ...environment.investors];
   components: string[] = Object.keys(environment.components);
 
   orderForm: FormGroup = this.fb.group({
@@ -25,21 +21,21 @@ export class OrdersComponent implements OnInit {
     items: this.fb.array([])
   });
 
-  constructor(
-    private fb: FormBuilder
-  ) { }
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.orderForm.get('shipping_fee')!.valueChanges.pipe(
-      debounceTime(500)
-    ).subscribe((shippingFee) => {
-      this.distributeShippingFee(Number(shippingFee));
-    });
-    this.orderForm.get('paid_in_behalf_amount')!.valueChanges.pipe(
-      debounceTime(500)
-    ).subscribe((amount) => {
-      this.distributeBehalfAmount(Number(amount));
-    });
+    this.orderForm
+      .get('shipping_fee')!
+      .valueChanges.pipe(debounceTime(500))
+      .subscribe((shippingFee) => {
+        this.distributeShippingFee(Number(shippingFee));
+      });
+    this.orderForm
+      .get('paid_in_behalf_amount')!
+      .valueChanges.pipe(debounceTime(500))
+      .subscribe((amount) => {
+        this.distributeBehalfAmount(Number(amount));
+      });
   }
 
   private roundUp(n: number) {
@@ -82,9 +78,7 @@ export class OrdersComponent implements OnInit {
     this.distributeShippingFee(Number(this.orderForm.get('shipping_fee')!.value));
     this.distributeBehalfAmount(Number(this.orderForm.get('paid_in_behalf_amount')!.value));
 
-    item.valueChanges.pipe(
-      debounceTime(500)
-    ).subscribe(() => {
+    item.valueChanges.pipe(debounceTime(500)).subscribe(() => {
       const price = Number(item.get('price')!.value);
       const quantity = Number(item.get('quantity')!.value);
       const cost = this.roundUp(price * quantity);
@@ -100,11 +94,10 @@ export class OrdersComponent implements OnInit {
   }
 
   get items(): FormArray {
-    return <FormArray> this.orderForm.get('items');
+    return <FormArray>this.orderForm.get('items');
   }
 
   onSubmit() {
     console.log(this.orderForm.value);
   }
-
 }
