@@ -13,9 +13,12 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { DirectivesModule } from '../../directives/directives.module';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { AddItemModalComponent } from './add-item-modal/add-item-modal.component';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
 @NgModule({
-  declarations: [OrdersComponent],
+  declarations: [OrdersComponent, AddItemModalComponent],
   imports: [
     CommonModule,
     OrdersRoutingModule,
@@ -29,7 +32,9 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
     NzDatePickerModule,
     NzAutocompleteModule,
     DirectivesModule,
-    NzEmptyModule
+    NzEmptyModule,
+    NzModalModule,
+    NzNotificationModule
   ]
 })
 export class OrdersModule {}

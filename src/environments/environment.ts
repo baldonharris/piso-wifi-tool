@@ -20,7 +20,8 @@ export const environment = {
   },
   investors: ['Harris', 'Homer'],
   firebase: {
-    earnings: `${firebase}/earnings.json`
+    earnings: `${firebase}/earnings.json`,
+    orders: `${firebase}/orders.json`
   }
 };
 
