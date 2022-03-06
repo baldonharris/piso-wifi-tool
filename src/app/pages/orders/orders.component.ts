@@ -12,8 +12,6 @@ export class OrdersComponent implements OnInit {
   investors: string[] = ['Earnings', ...environment.investors];
   components: string[] = Object.keys(environment.components);
 
-  test: string[] = ['Earnings', ...environment.investors];
-
   orderForm: FormGroup = this.fb.group({
     date_ordered: this.fb.control(''),
     shipping_fee: this.fb.control(0),
