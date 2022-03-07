@@ -16,7 +16,8 @@ export const environment = {
     PSU: 500,
     'TP Link 110': 1790,
     'SD Card': 0,
-    'Service Charge': 0
+    'Service Charge': 0,
+    'Coinslot LED': 201.5
   },
   investors: ['Harris', 'Homer'],
   firebase: {

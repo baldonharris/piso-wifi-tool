@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { debounceTime } from 'rxjs/operators';
+import { UtilsService } from '../../../services/utils.service';
 
 interface Item {
   item: string;
@@ -33,8 +34,8 @@ interface Order {
 export class AddItemModalComponent implements OnInit {
   @Output() onOrderAdded: EventEmitter<Order> = new EventEmitter<Order>();
 
-  investors: string[] = ['Earnings', ...environment.investors];
-  components: string[] = Object.keys(environment.components);
+  investors: string[] = [];
+  components: string[] = [];
   isSubmitting: boolean = false;
 
   orderForm: FormGroup = this.fb.group({
@@ -46,7 +47,10 @@ export class AddItemModalComponent implements OnInit {
     items: this.fb.array([])
   });
 
-  constructor(private fb: FormBuilder, private httpClient: HttpClient) {}
+  constructor(private fb: FormBuilder, private httpClient: HttpClient, private utils: UtilsService) {
+    this.components = this.utils.getComponents();
+    this.investors = this.utils.getInvestors('Earnings');
+  }
 
   ngOnInit(): void {
     this.orderForm

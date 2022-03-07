@@ -16,6 +16,9 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { AddItemModalComponent } from './add-item-modal/add-item-modal.component';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 
 @NgModule({
   declarations: [OrdersComponent, AddItemModalComponent],
@@ -34,7 +37,10 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
     DirectivesModule,
     NzEmptyModule,
     NzModalModule,
-    NzNotificationModule
+    NzNotificationModule,
+    NzTableModule,
+    NzCardModule,
+    NzBadgeModule
   ]
 })
 export class OrdersModule {}

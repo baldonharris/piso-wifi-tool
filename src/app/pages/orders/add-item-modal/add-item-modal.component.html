@@ -1,66 +1,70 @@
 <form [formGroup]="orderForm">
   <div nz-row [nzGutter]="30">
-    <div nz-col nzSpan="12" id="items-column">
+    <div nz-col nzSpan="12">
       <nz-empty *ngIf="items.controls.length === 0" [nzNotFoundContent]="null"></nz-empty>
-      <div formArrayName="items" *ngFor="let control of items.controls; let i = index">
-        <div [formGroupName]="i">
-          <div class="form__item">
-            <label class="form__label">Item</label>
-            <div class="form__input">
-              <input [nzAutocomplete]="item" nz-input formControlName="item" placeholder="Item" />
-              <nz-autocomplete [nzDataSource]="components" #item></nz-autocomplete>
+      <nz-ribbon nzText="Item{{ items.controls.length > 1 ? 's' : '' }}: {{ items.controls.length }}" *ngIf="items.controls.length > 0">
+        <nz-card id="items-column">
+          <div formArrayName="items" *ngFor="let control of items.controls; let i = index">
+            <div [formGroupName]="i">
+              <div class="form__item">
+                <label class="form__label">Item</label>
+                <div class="form__input">
+                  <input [nzAutocomplete]="item" nz-input formControlName="item" placeholder="Item" />
+                  <nz-autocomplete [nzDataSource]="components" #item></nz-autocomplete>
+                </div>
+              </div>
+              <div class="form__item">
+                <label class="form__label">Price</label>
+                <div class="form__input">
+                  <input nz-input formControlName="price" placeholder="Price" />
+                </div>
+              </div>
+              <div class="form__item">
+                <label class="form__label">Quantity</label>
+                <div class="form__input">
+                  <input nz-input formControlName="quantity" placeholder="Quantity" />
+                </div>
+              </div>
+              <div class="form__item">
+                <label class="form__label">Cost</label>
+                <div class="form__input">
+                  <input nz-input formControlName="cost" placeholder="Cost" [readonly]="true" />
+                </div>
+              </div>
+              <div class="form__item">
+                <label class="form__label">Shipping Fee</label>
+                <div class="form__input">
+                  <input nz-input formControlName="shipping_fee" placeholder="Shipping Fee" [readonly]="true" />
+                </div>
+              </div>
+              <div class="form__item">
+                <label class="form__label">Paid In Behalf Amount</label>
+                <div class="form__input">
+                  <input
+                    nz-input
+                    formControlName="paid_in_behalf_amount"
+                    placeholder="Paid In Behalf Amount"
+                    [readonly]="true"
+                  />
+                </div>
+              </div>
+              <div class="form__item">
+                <label class="form__label">Subtotal</label>
+                <div class="form__input">
+                  <input nz-input formControlName="subtotal" placeholder="Subtotal" [readonly]="true" />
+                </div>
+              </div>
+              <div class="form__item">
+                <label class="form__label">Total</label>
+                <div class="form__input">
+                  <input nz-input formControlName="total" placeholder="Total" [readonly]="true" />
+                </div>
+              </div>
+              <nz-divider *ngIf="items.controls.length - 1 !== i" nzType="horizontal"></nz-divider>
             </div>
           </div>
-          <div class="form__item">
-            <label class="form__label">Price</label>
-            <div class="form__input">
-              <input nz-input formControlName="price" placeholder="Price" />
-            </div>
-          </div>
-          <div class="form__item">
-            <label class="form__label">Quantity</label>
-            <div class="form__input">
-              <input nz-input formControlName="quantity" placeholder="Quantity" />
-            </div>
-          </div>
-          <div class="form__item">
-            <label class="form__label">Cost</label>
-            <div class="form__input">
-              <input nz-input formControlName="cost" placeholder="Cost" [readonly]="true" />
-            </div>
-          </div>
-          <div class="form__item">
-            <label class="form__label">Shipping Fee</label>
-            <div class="form__input">
-              <input nz-input formControlName="shipping_fee" placeholder="Shipping Fee" [readonly]="true" />
-            </div>
-          </div>
-          <div class="form__item">
-            <label class="form__label">Paid In Behalf Amount</label>
-            <div class="form__input">
-              <input
-                nz-input
-                formControlName="paid_in_behalf_amount"
-                placeholder="Paid In Behalf Amount"
-                [readonly]="true"
-              />
-            </div>
-          </div>
-          <div class="form__item">
-            <label class="form__label">Subtotal</label>
-            <div class="form__input">
-              <input nz-input formControlName="subtotal" placeholder="Subtotal" [readonly]="true" />
-            </div>
-          </div>
-          <div class="form__item">
-            <label class="form__label">Total</label>
-            <div class="form__input">
-              <input nz-input formControlName="total" placeholder="Total" [readonly]="true" />
-            </div>
-          </div>
-          <nz-divider *ngIf="items.controls.length - 1 !== i" nzType="horizontal"></nz-divider>
-        </div>
-      </div>
+        </nz-card>
+      </nz-ribbon>
     </div>
     <div nz-col nzSpan="12">
       <div class="form__item form__item--override form__item--block">

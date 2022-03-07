@@ -1,4 +1,50 @@
-<button nz-button nzType="primary" (click)="onAddOrder()">Add Order</button>
+<div nz-row [nzGutter]="[16, 24]">
+  <div nz-col nzOffset="20" nzSpan="4" class="controls">
+    <button nz-button nzType="primary" (click)="onAddOrder()">Add Order</button>
+  </div>
+  <div nz-col nzSpan="24">
+    <nz-table
+      #basicTable
+      [nzData]="items"
+      [nzLoading]="isFetchingOrders"
+      [nzHideOnSinglePage]="true"
+      (nzPageIndexChange)="onPaginate($event)"
+    >
+      <thead>
+      <tr>
+        <th></th>
+        <th>Item</th>
+        <th>Date Ordered</th>
+        <th>Paid By</th>
+        <th>Paid In Behalf By</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Cost</th>
+        <th>Shipping Fee</th>
+        <th>Paid In Behalf Amount</th>
+        <th>Subtotal</th>
+        <th>Total</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of basicTable.data; let i = index">
+        <td>{{ getCurrentOrder(i + 1) }}</td>
+        <td>{{ data.item }}</td>
+        <td>{{ data.date_ordered | date: 'YYYY-MM-dd' }}</td>
+        <td>{{ data.paid_by }}</td>
+        <td>{{ data.paid_in_behalf_by }}</td>
+        <td>{{ data.quantity }}</td>
+        <td [nzAlign]="'right'">{{ data.price | currency: '₱' }}</td>
+        <td [nzAlign]="'right'">{{ data.cost | currency: '₱' }}</td>
+        <td [nzAlign]="'right'">{{ data.shipping_fee | currency: '₱' }}</td>
+        <td [nzAlign]="'right'">{{ data.paid_in_behalf_amount | currency: '₱' }}</td>
+        <td [nzAlign]="'right'">{{ data.subtotal | currency: '₱' }}</td>
+        <td [nzAlign]="'right'">{{ data.total | currency: '₱' }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
 <nz-modal [(nzVisible)]="orderModalShow" nzWidth="500" nzTitle="Add Order" (nzOnCancel)="onCancelModal()" [nzFooter]="null">
   <ng-container *nzModalContent>
     <app-add-item-modal
