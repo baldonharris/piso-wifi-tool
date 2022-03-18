@@ -20,3 +20,20 @@ input[readonly]:hover {
   border-color: #d9d9d9;
   border-right-width: 1px !important;
 }
+
+.paid {
+  background-color: #f6ffed !important;
+  border: 1px solid #b7eb8f !important;
+  color: #b7eb8f !important;
+}
+
+.unpaid {
+  background-color: #fff2f0 !important;
+  border: 1px solid #ffccc7 !important;
+  color: #ffccc7 !important;
+}
+
+.paid:hover,
+.unpaid:hover {
+  cursor: auto;
+}

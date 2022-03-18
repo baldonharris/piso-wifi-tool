@@ -11,36 +11,48 @@
       (nzPageIndexChange)="onPaginate($event)"
     >
       <thead>
-      <tr>
-        <th></th>
-        <th>Item</th>
-        <th>Date Ordered</th>
-        <th>Paid By</th>
-        <th>Paid In Behalf By</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Cost</th>
-        <th>Shipping Fee</th>
-        <th>Paid In Behalf Amount</th>
-        <th>Subtotal</th>
-        <th>Total</th>
-      </tr>
+        <tr>
+          <th></th>
+          <th>Item</th>
+          <th>Date Ordered</th>
+          <th>Status</th>
+          <th>Paid By</th>
+          <th>Paid In Behalf By</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Cost</th>
+          <th>Shipping Fee</th>
+          <th>Paid In Behalf Amount</th>
+          <th>Subtotal</th>
+          <th>Total</th>
+          <th>Action</th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let data of basicTable.data; let i = index">
-        <td>{{ getCurrentOrder(i + 1) }}</td>
-        <td>{{ data.item }}</td>
-        <td>{{ data.date_ordered | date: 'YYYY-MM-dd' }}</td>
-        <td>{{ data.paid_by }}</td>
-        <td>{{ data.paid_in_behalf_by }}</td>
-        <td>{{ data.quantity }}</td>
-        <td [nzAlign]="'right'">{{ data.price | currency: '₱' }}</td>
-        <td [nzAlign]="'right'">{{ data.cost | currency: '₱' }}</td>
-        <td [nzAlign]="'right'">{{ data.shipping_fee | currency: '₱' }}</td>
-        <td [nzAlign]="'right'">{{ data.paid_in_behalf_amount | currency: '₱' }}</td>
-        <td [nzAlign]="'right'">{{ data.subtotal | currency: '₱' }}</td>
-        <td [nzAlign]="'right'">{{ data.total | currency: '₱' }}</td>
-      </tr>
+        <tr *ngFor="let data of basicTable.data; let i = index">
+          <td>{{ getCurrentOrder(i + 1) }}</td>
+          <td>{{ data.item }}</td>
+          <td>{{ data.date_ordered | date: 'YYYY-MM-dd' }}</td>
+          <td>
+            <button *ngIf="data.status === 'paid'" class="paid" nz-button nzType="default" nzBlock disabled>Paid</button>
+            <button *ngIf="data.status === 'unpaid'" class="unpaid" nz-button nzType="default" nzBlock disabled>Unpaid</button>
+          </td>
+          <td>{{ data.paid_by }}</td>
+          <td>{{ data.paid_in_behalf_by }}</td>
+          <td>{{ data.quantity }}</td>
+          <td [nzAlign]="'right'">{{ data.price | currency: '₱' }}</td>
+          <td [nzAlign]="'right'">{{ data.cost | currency: '₱' }}</td>
+          <td [nzAlign]="'right'">{{ data.shipping_fee | currency: '₱' }}</td>
+          <td [nzAlign]="'right'">{{ data.paid_in_behalf_amount | currency: '₱' }}</td>
+          <td [nzAlign]="'right'">{{ data.subtotal | currency: '₱' }}</td>
+          <td [nzAlign]="'right'">{{ data.total | currency: '₱' }}</td>
+          <td>
+            <button *ngIf="data.status === 'unpaid'" (click)="onPay(data)" nz-button nzType="primary" nzBlock>
+              <i nz-icon nzType="money-collect" nzTheme="twotone"></i>
+              Pay
+            </button>
+          </td>
+        </tr>
       </tbody>
     </nz-table>
   </div>

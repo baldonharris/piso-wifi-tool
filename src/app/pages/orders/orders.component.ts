@@ -1,22 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { FirebaseService, Item } from '../../services/firebase.service';
 import { map } from 'rxjs/operators';
-
-interface Item {
-  item: string;
-  date_ordered: string;
-  paid_by: string;
-  paid_in_behalf_by: string;
-  quantity: number;
-  price: number;
-  cost: number;
-  shipping_fee: number;
-  paid_in_behalf_amount: number;
-  subtotal: number;
-  total: number;
-}
 
 @Component({
   selector: 'app-orders',
@@ -29,7 +14,7 @@ export class OrdersComponent implements OnInit {
   isFetchingOrders: boolean = true;
   currentPage: number = 1;
 
-  constructor(private notification: NzNotificationService, private httpClient: HttpClient) {}
+  constructor(private notification: NzNotificationService, private firebase: FirebaseService) {}
 
   ngOnInit(): void {
     this.fetchOrders();
@@ -37,22 +22,27 @@ export class OrdersComponent implements OnInit {
 
   private fetchOrders() {
     this.isFetchingOrders = true;
-    this.httpClient
-      .get(environment.firebase.orders)
+    this.firebase
+      .get('orders')
       .pipe(
         map((orders) => {
           const newOrders = Object.values(orders);
           const items: Item[] = [];
 
-          // @ts-ignore
-          newOrders.sort((a, b) => new Date(b.date_ordered) - new Date(a.date_ordered));
-
-          for (let order of newOrders) {
+          for (let [key, order] of Object.entries(orders)) {
+            // @ts-ignore
             for (let item of order.items) {
               items.push({
+                id: key,
+                // @ts-ignore
+                path: `${key}/items/${order.items.indexOf(item)}`,
                 item: item.item,
+                status: !!item.status ? item.status : 'unpaid',
+                // @ts-ignore
                 date_ordered: order.date_ordered,
+                // @ts-ignore
                 paid_by: order.paid_by,
+                // @ts-ignore
                 paid_in_behalf_by: order.paid_in_behalf_by || '-',
                 quantity: item.quantity,
                 price: item.price,
@@ -64,6 +54,9 @@ export class OrdersComponent implements OnInit {
               });
             }
           }
+
+          // @ts-ignore
+          items.sort((a, b) => new Date(b.date_ordered) - new Date(a.date_ordered));
 
           return items;
         })
@@ -90,6 +83,16 @@ export class OrdersComponent implements OnInit {
 
   onPaginate(page: number) {
     this.currentPage = page;
+  }
+
+  onPay(data: Item) {
+    if (data.status === 'unpaid') {
+      this.isFetchingOrders = true;
+      this.firebase.save('orders', 'paid', `${data.path}/status`).subscribe((r) => {
+        data.status = 'paid';
+        this.isFetchingOrders = false;
+      });
+    }
   }
 
   getCurrentOrder(index: number) {

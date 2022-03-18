@@ -14,4 +14,8 @@ export class UtilsService {
   getInvestors(additional: string): string[] {
     return [additional, ...environment.investors].sort();
   }
+
+  roundUp(n: number): number {
+    return Math.round((n + Number.EPSILON) * 100) / 100;
+  }
 }

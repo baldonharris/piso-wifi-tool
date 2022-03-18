@@ -4,8 +4,9 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { debounceTime } from 'rxjs/operators';
 import { UtilsService } from '../../../services/utils.service';
+import { FirebaseService } from '../../../services/firebase.service';
 
-interface Item {
+export interface Item {
   item: string;
   quantity: number;
   price: number;
@@ -14,6 +15,7 @@ interface Item {
   paid_in_behalf_amount: number;
   subtotal: number;
   total: number;
+  status?: 'paid' | 'unpaid';
 }
 
 interface Order {
@@ -47,7 +49,7 @@ export class AddItemModalComponent implements OnInit {
     items: this.fb.array([])
   });
 
-  constructor(private fb: FormBuilder, private httpClient: HttpClient, private utils: UtilsService) {
+  constructor(private fb: FormBuilder, private utils: UtilsService, private firebase: FirebaseService) {
     this.components = this.utils.getComponents();
     this.investors = this.utils.getInvestors('Earnings');
   }
@@ -67,12 +69,8 @@ export class AddItemModalComponent implements OnInit {
       });
   }
 
-  private roundUp(n: number) {
-    return Math.round((n + Number.EPSILON) * 100) / 100;
-  }
-
   private distributeShippingFee(shippingFee: number) {
-    const distributedSF = this.roundUp(shippingFee / this.items.controls.length);
+    const distributedSF = this.utils.roundUp(shippingFee / this.items.controls.length);
     for (let item of this.items.controls) {
       // @ts-ignore
       item.controls['shipping_fee'].setValue(distributedSF);
@@ -80,7 +78,7 @@ export class AddItemModalComponent implements OnInit {
   }
 
   private distributeBehalfAmount(amount: number) {
-    const distributedAmount = this.roundUp(amount / this.items.controls.length);
+    const distributedAmount = this.utils.roundUp(amount / this.items.controls.length);
     for (let item of this.items.controls) {
       // @ts-ignore
       item.controls['paid_in_behalf_amount'].setValue(distributedAmount);
@@ -114,11 +112,11 @@ export class AddItemModalComponent implements OnInit {
     item.valueChanges.pipe(debounceTime(500)).subscribe(() => {
       const price = Number(item.get('price')!.value);
       const quantity = Number(item.get('quantity')!.value);
-      const cost = this.roundUp(price * quantity);
+      const cost = this.utils.roundUp(price * quantity);
       const shippingFee = Number(item.get('shipping_fee')!.value);
-      const subtotal = this.roundUp(cost + shippingFee);
+      const subtotal = this.utils.roundUp(cost + shippingFee);
       const paidInBehalfAmount = Number(item.get('paid_in_behalf_amount')!.value);
-      const total = this.roundUp(subtotal - paidInBehalfAmount);
+      const total = this.utils.roundUp(subtotal - paidInBehalfAmount);
 
       item.controls['cost'].setValue(cost);
       item.controls['subtotal'].setValue(subtotal);
@@ -128,7 +126,7 @@ export class AddItemModalComponent implements OnInit {
 
   onSubmit() {
     this.isSubmitting = true;
-    this.httpClient.post(environment.firebase.orders, this.orderForm.value).subscribe((newOrder: any) => {
+    this.firebase.save('orders', this.orderForm.value).subscribe((newOrder: any) => {
       this.orderForm.reset();
       this.isSubmitting = false;
       this.onOrderAdded.emit(newOrder);

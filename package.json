@@ -21,6 +21,8 @@
     "@angular/platform-browser": "~13.2.0",
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
+    "@types/axios": "^0.14.0",
+    "axios": "^0.26.1",
     "ng-zorro-antd": "^13.1.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

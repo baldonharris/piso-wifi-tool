@@ -1,0 +1,12 @@
+<div nz-row>
+  <div nz-col nzSpan="16">
+    <nz-row [nzGutter]="16">
+      <nz-col *ngFor="let investor of investors" [nzSpan]="(24 / (investors.length + 1))">
+        <nz-statistic nzValue="{{ investments[investor] | currency: '₱' }}" [nzTitle]="investor"></nz-statistic>
+      </nz-col>
+      <nz-col [nzSpan]="(24 / (investors.length + 1))">
+        <nz-statistic nzValue="{{ investments['Earnings'] | currency: '₱' }}" [nzTitle]="'Rerolled'"></nz-statistic>
+      </nz-col>
+    </nz-row>
+  </div>
+</div>
