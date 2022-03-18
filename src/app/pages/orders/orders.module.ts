@@ -21,6 +21,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 
 @NgModule({
   declarations: [OrdersComponent, AddItemModalComponent],
@@ -44,7 +45,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzCardModule,
     NzBadgeModule,
     NzAlertModule,
-    NzIconModule
+    NzIconModule,
+    NzTagModule
   ]
 })
 export class OrdersModule {}

@@ -33,9 +33,9 @@
           <td>{{ getCurrentOrder(i + 1) }}</td>
           <td>{{ data.item }}</td>
           <td>{{ data.date_ordered | date: 'YYYY-MM-dd' }}</td>
-          <td>
-            <button *ngIf="data.status === 'paid'" class="paid" nz-button nzType="default" nzBlock disabled>Paid</button>
-            <button *ngIf="data.status === 'unpaid'" class="unpaid" nz-button nzType="default" nzBlock disabled>Unpaid</button>
+          <td style="text-transform: uppercase; font-weight: 700">
+            <nz-tag *ngIf="data.status === 'paid'" nzColor="success">{{ data.status }}</nz-tag>
+            <nz-tag *ngIf="data.status === 'unpaid'" nzColor="error">{{ data.status }}</nz-tag>
           </td>
           <td>{{ data.paid_by }}</td>
           <td>{{ data.paid_in_behalf_by }}</td>
