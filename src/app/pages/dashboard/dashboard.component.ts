@@ -12,7 +12,9 @@ export class DashboardComponent implements OnInit {
   investors: string[] = environment.investors;
   investments: any = {};
 
-  constructor(private firebase: FirebaseService, private utils: UtilsService) {}
+  constructor(private firebase: FirebaseService, private utils: UtilsService) {
+    this.investors = this.utils.getInvestors('Earnings');
+  }
 
   ngOnInit(): void {
     this.firebase.getOrders().subscribe((items: Item[]) => {
@@ -21,7 +23,9 @@ export class DashboardComponent implements OnInit {
         this.createInvestor(item.paid_in_behalf_by);
 
         // @ts-ignore
-        this.investments[item.paid_by] += Number(item.total);
+        if (this.investors.indexOf(item.paid_by) > -1) {
+          this.investments[item.paid_by] += Number(item.total);
+        }
 
         if (this.investors.indexOf(item.paid_in_behalf_by) > -1) {
           // @ts-ignore

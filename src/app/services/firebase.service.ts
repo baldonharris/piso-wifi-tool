@@ -24,18 +24,22 @@ export class FirebaseService {
   getOrders(): Observable<Item[]> {
     return this.httpClient.get(environment.firebase.orders).pipe(
       map((orders) => {
-        const newOrders = Object.values(orders);
         const items: Item[] = [];
 
-        // @ts-ignore
-        newOrders.sort((a, b) => new Date(b.date_ordered) - new Date(a.date_ordered));
-
-        for (let order of newOrders) {
+        for (let [key, order] of Object.entries(orders)) {
+          // @ts-ignore
           for (let item of order.items) {
             items.push({
+              id: key,
+              // @ts-ignore
+              path: `${key}/items/${order.items.indexOf(item)}`,
               item: item.item,
+              status: !!item.status ? item.status : 'unpaid',
+              // @ts-ignore
               date_ordered: order.date_ordered,
-              paid_by: order.paid_by,
+              // @ts-ignore
+              paid_by: order.paid_by || '-',
+              // @ts-ignore
               paid_in_behalf_by: order.paid_in_behalf_by || '-',
               quantity: item.quantity,
               price: item.price,
@@ -48,27 +52,23 @@ export class FirebaseService {
           }
         }
 
+        // @ts-ignore
+        items.sort((a, b) => new Date(b.date_ordered) - new Date(a.date_ordered));
+
         return items;
       })
     );
-  }
-
-  saveOrders(orders: any): Observable<any> {
-    return this.httpClient.post(environment.firebase.orders, orders);
   }
 
   get(type: firebase): Observable<any> {
     return this.httpClient.get(environment.firebase[type]);
   }
 
-  save(type: firebase, data: any, path?: string): Observable<any> {
-    if (!!path) {
-      console.log('heeeyy!!');
-      const newData = { [path]: data };
+  insert(type: firebase, data: any, path?: string): Observable<any> {
+    return this.httpClient.post(environment.firebase[type], data);
+  }
 
-      return this.httpClient.patch(environment.firebase[type], newData);
-    } else {
-      return this.httpClient.post(environment.firebase[type], data);
-    }
+  update(type: firebase, data: any): Observable<any> {
+    return this.httpClient.patch(environment.firebase[type], data);
   }
 }

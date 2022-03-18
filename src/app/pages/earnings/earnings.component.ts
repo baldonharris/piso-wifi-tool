@@ -71,10 +71,12 @@ export class EarningsComponent implements OnInit {
 
   onSubmit() {
     this.isSubmitting = true;
+    this.isFetchingEarnings = true;
     this.httpClient.post(environment.firebase.earnings, this.earningForm.value).subscribe((r) => {
       this.fetchEarnings();
       this.earningForm.reset();
       this.isSubmitting = false;
+      this.isFetchingEarnings = false;
     });
   }
 

@@ -1,7 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { debounceTime } from 'rxjs/operators';
 import { UtilsService } from '../../../services/utils.service';
 import { FirebaseService } from '../../../services/firebase.service';
@@ -126,7 +124,7 @@ export class AddItemModalComponent implements OnInit {
 
   onSubmit() {
     this.isSubmitting = true;
-    this.firebase.save('orders', this.orderForm.value).subscribe((newOrder: any) => {
+    this.firebase.insert('orders', this.orderForm.value).subscribe((newOrder: any) => {
       this.orderForm.reset();
       this.isSubmitting = false;
       this.onOrderAdded.emit(newOrder);

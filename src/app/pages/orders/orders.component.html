@@ -47,7 +47,7 @@
           <td [nzAlign]="'right'">{{ data.subtotal | currency: '₱' }}</td>
           <td [nzAlign]="'right'">{{ data.total | currency: '₱' }}</td>
           <td>
-            <button *ngIf="data.status === 'unpaid'" (click)="onPay(data)" nz-button nzType="primary" nzBlock>
+            <button *ngIf="data.status === 'unpaid'" (click)="onPay(data, 'Earnings')" nz-button nzType="primary" nzBlock>
               <i nz-icon nzType="money-collect" nzTheme="twotone"></i>
               Pay
             </button>

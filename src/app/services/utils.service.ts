@@ -11,8 +11,12 @@ export class UtilsService {
     return Object.keys(environment.components).sort();
   }
 
-  getInvestors(additional: string): string[] {
-    return [additional, ...environment.investors].sort();
+  getInvestors(additional?: string): string[] {
+    if (!!additional) {
+      return [additional, ...environment.investors].sort();
+    }
+
+    return environment.investors.sort();
   }
 
   roundUp(n: number): number {
