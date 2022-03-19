@@ -1,7 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { app, BrowserWindow } = require('electron');
-const url = require('url');
-const path = require('path');
 
 let mainWindow;
 
@@ -14,15 +12,7 @@ function createWindow() {
     },
   });
 
-  mainWindow.loadURL(
-    url.format({
-      pathname: path.join(__dirname, '/dist/piso-wifi-tool/index.html'),
-      protocol: 'file:',
-      slashes: true,
-    }),
-  );
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  mainWindow.loadURL(`file://${__dirname}/dist/piso-wifi-tool/index.html`);
 
   mainWindow.on('closed', () => {
     mainWindow = null;

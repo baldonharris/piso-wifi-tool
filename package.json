@@ -1,15 +1,41 @@
 {
-  "name": "piso-wifi-tool",
-  "version": "0.0.0",
+  "name": "hcb-piso-wfi",
+  "productName": "HCB Piso Wifi",
+  "version": "1.0.0",
   "main": "app.js",
+  "author": "Harris Baldon",
+  "description": "Inventory system for HCB Piso WIfi",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --open",
-    "start:electron": "ng build --base-href ./ && electron .",
+    "prestart": "ng build --base-href ./",
+    "start": "electron-forge start",
+    "start:angular": "ng serve --open",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "package": "electron-forge package",
+    "premake": "ng build --base-href ./",
+    "make": "electron-forge make",
+    "prebuild:electron": "ng build --base-href ./",
+    "build:electron": "electron-builder"
+  },
+  "build": {
+    "appId": "hcb-piso-wifi",
+    "directories": {"output": "release/"},
+    "win": {
+      "target": ["nsis"],
+      "icon": "src/favicon.ico",
+      "requestedExecutionLevel": "requireAdministrator"
+    },
+    "nsis": {
+      "installerIcon": "src/favicon.ico",
+      "uninstallerIcon": "src/favicon.ico",
+      "uninstallDisplayName": "HCB Piso Wifi",
+      "license": "license.txt",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   },
   "private": true,
   "dependencies": {
@@ -23,6 +49,7 @@
     "@angular/router": "~13.2.0",
     "@types/axios": "^0.14.0",
     "axios": "^0.26.1",
+    "electron-squirrel-startup": "^1.0.0",
     "ng-zorro-antd": "^13.1.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
@@ -32,11 +59,17 @@
     "@angular-devkit/build-angular": "~13.2.5",
     "@angular/cli": "~13.2.5",
     "@angular/compiler-cli": "~13.2.0",
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.13.0",
     "electron": "^17.1.0",
+    "electron-builder": "^22.14.13",
     "eslint": "^8.10.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.4",
@@ -54,5 +87,32 @@
   "lint-staged": {
     "*.js": "eslint --cache --fix",
     "*.{js,css,ts,md}": "prettier --write"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "piso_wifi_tool"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   }
 }

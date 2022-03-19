@@ -89,11 +89,6 @@ export class DashboardComponent implements OnInit {
               this.profit / (this.investors.length - 1) - (this.withdrawn[investor] - this.investments[investor]);
           }
         }
-
-        console.log(this.investments);
-        console.log(this.cashflow, this.buckets);
-        console.log(this.profit, this.totalInvestments, this.totalUnpaid);
-        console.log(this.withdrawn, this.potentialCut, this.withdrawnTotal);
       });
     });
   }
