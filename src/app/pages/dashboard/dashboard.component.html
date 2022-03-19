@@ -1,9 +1,86 @@
-<div nz-row>
-  <div nz-col nzSpan="16">
-    <nz-row [nzGutter]="16">
-      <nz-col *ngFor="let investor of investors" [nzSpan]="(24 / investors.length)">
-        <nz-statistic nzValue="{{ investments[investor] | currency: '₱' }}" [nzTitle]="investor === 'Earnings' ? 'Rerolled' : investor"></nz-statistic>
-      </nz-col>
-    </nz-row>
+<div style="margin-bottom: 30px;">
+  <div nz-row [nzGutter]="[16, 16]">
+    <nz-col [nzSpan]="24">
+      <h3 nz-typography>Potential Cut</h3>
+    </nz-col>
+    <nz-col *ngFor="let investor of investors" [nzSpan]="6">
+      <ng-container *ngIf="investor !== 'Rerolled'">
+        <nz-statistic nzValue="{{ this.potentialCut[investor] | currency: '₱' }}" [nzTitle]="investor === 'Earnings' ? 'Rerolled' : investor"></nz-statistic>
+      </ng-container>
+    </nz-col>
   </div>
 </div>
+
+<div nz-row [nzGutter]="[16, 16]">
+  <div nz-col [nzSpan]="6">
+    <div class="money-dashboard">
+      <nz-card [nzTitle]="currentMoneyCardTitle" >
+        <div nz-row *ngFor="let bucket of buckets | keyvalue">
+          <div nz-col [nzSpan]="12">{{ bucket.key }}</div>
+          <div nz-col [nzSpan]="12" style="text-align: right">{{ bucket.value + '' | currency: '₱' }}</div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <div nz-col [nzSpan]="6">
+    <div class="investment-dashboard">
+      <nz-card [nzTitle]="investmentsCardTitle">
+        <div nz-row *ngFor="let investment of investments | keyvalue">
+          <ng-container *ngIf="investment.key !== 'Earnings'">
+            <div nz-col [nzSpan]="12">{{ investment.key }}</div>
+            <div nz-col [nzSpan]="12" style="text-align: right">{{ investment.value + '' | currency: '₱' }}</div>
+          </ng-container>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <div nz-col [nzSpan]="6">
+    <div class="withdrawn-dashboard">
+      <nz-card [nzTitle]="withdrawnCardTitle" >
+        <div nz-row *ngFor="let w of withdrawn | keyvalue">
+          <div nz-col [nzSpan]="12">{{ w.key }}</div>
+          <div nz-col [nzSpan]="12" style="text-align: right">{{ w.value + '' | currency: '₱' }}</div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <div nz-col [nzSpan]="6">
+    <div class="rerolled-dashboard">
+      <nz-card [nzTitle]="rerolledCardTitle" >
+        <div nz-row>
+          <div nz-col [nzSpan]="12">Paid</div>
+          <div nz-col [nzSpan]="12" style="text-align: right">{{ investments['Earnings'] | currency: '₱' }}</div>
+        </div>
+        <div nz-row>
+          <div nz-col [nzSpan]="12">Unpaid</div>
+          <div nz-col [nzSpan]="12" style="text-align: right">{{ totalUnpaid | currency: '₱' }}</div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+</div>
+
+<ng-template #currentMoneyCardTitle>
+  <div nz-row>
+    <div nz-col [nzSpan]="12">Current Money</div>
+    <div nz-col [nzSpan]="12" style="text-align: right">{{ currentMoney | currency: '₱' }}</div>
+  </div>
+</ng-template>
+<ng-template #investmentsCardTitle>
+  <div nz-row>
+    <div nz-col [nzSpan]="12">Investments</div>
+    <div nz-col [nzSpan]="12" style="text-align: right">{{ totalInvestments | currency: '₱' }}</div>
+  </div>
+</ng-template>
+<ng-template #rerolledCardTitle>
+  <div nz-row>
+    <div nz-col [nzSpan]="12">Rerolled</div>
+    <div nz-col [nzSpan]="12" style="text-align: right">{{ (investments['Earnings'] + totalUnpaid) | currency: '₱' }}</div>
+  </div>
+</ng-template>
+<ng-template #withdrawnCardTitle>
+  <div nz-row>
+    <div nz-col [nzSpan]="12">Withdrawn</div>
+    <div nz-col [nzSpan]="12" style="text-align: right">{{ withdrawnTotal | currency: '₱' }}</div>
+  </div>
+</ng-template>

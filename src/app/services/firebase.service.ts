@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Item as I } from '../pages/orders/add-item-modal/add-item-modal.component';
+import { Earning } from '../pages/earnings/earnings.component';
 
 type firebase = 'orders' | 'earnings';
 
@@ -56,6 +57,26 @@ export class FirebaseService {
         items.sort((a, b) => new Date(b.date_ordered) - new Date(a.date_ordered));
 
         return items;
+      })
+    );
+  }
+
+  getEarnings(): Observable<Earning[]> {
+    return this.httpClient.get(environment.firebase.earnings).pipe(
+      map((earnings) => {
+        let earningz: Earning[] = [];
+        if (earnings) {
+          for (const [key, value] of Object.entries(earnings)) {
+            value.amount = Number(value.amount);
+
+            earningz.push({ ...{ id: key }, ...value });
+          }
+
+          // @ts-ignore
+          earningz.sort((a, b) => new Date(b.date) - new Date(a.date));
+        }
+
+        return earningz;
       })
     );
   }

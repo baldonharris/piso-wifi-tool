@@ -1,0 +1,19 @@
+.money-dashboard .ant-card-head {
+  background-color: #1890ff;
+  color: #ffffff;
+}
+
+.investment-dashboard .ant-card-head {
+  background-color: #87d068;
+  color: #ffffff;
+}
+
+.rerolled-dashboard .ant-card-head {
+  background-color: #13c2c2;
+  color: #ffffff;
+}
+
+.withdrawn-dashboard .ant-card-head {
+  background-color: #eb2f96;
+  color: #ffffff;
+}

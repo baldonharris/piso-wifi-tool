@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { FormControl, FormGroup } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { FirebaseService } from 'src/app/services/firebase.service';
 
-interface Earning {
+export interface Earning {
   id: string;
   date: string;
   type: string;
@@ -33,7 +33,7 @@ export class EarningsComponent implements OnInit {
   isSubmitting: boolean = false;
   earnings: Earning[] = [];
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private firebase: FirebaseService) {}
 
   ngOnInit(): void {
     this.fetchEarnings();
@@ -41,18 +41,8 @@ export class EarningsComponent implements OnInit {
 
   private fetchEarnings() {
     this.isFetchingEarnings = true;
-    this.httpClient.get(environment.firebase.earnings).subscribe((earnings) => {
-      this.earnings = [];
-      if (earnings) {
-        for (const [key, value] of Object.entries(earnings)) {
-          value.amount = Number(value.amount);
-
-          this.earnings.push({ ...{ id: key }, ...value });
-        }
-
-        // @ts-ignore
-        this.earnings.sort((a, b) => new Date(b.date) - new Date(a.date));
-      }
+    this.firebase.getEarnings().subscribe((earnings: Earning[]) => {
+      this.earnings = earnings;
       this.isFetchingEarnings = false;
     });
   }
@@ -72,7 +62,7 @@ export class EarningsComponent implements OnInit {
   onSubmit() {
     this.isSubmitting = true;
     this.isFetchingEarnings = true;
-    this.httpClient.post(environment.firebase.earnings, this.earningForm.value).subscribe((r) => {
+    this.firebase.insert('earnings', this.earningForm.value).subscribe((r) => {
       this.fetchEarnings();
       this.earningForm.reset();
       this.isSubmitting = false;
