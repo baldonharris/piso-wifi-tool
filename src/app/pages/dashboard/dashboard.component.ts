@@ -89,6 +89,8 @@ export class DashboardComponent implements OnInit {
               this.profit / (this.investors.length - 1) - (this.withdrawn[investor] - this.investments[investor]);
           }
         }
+
+        this.buckets['Bank'] += this.totalUnpaid;
       });
     });
   }
