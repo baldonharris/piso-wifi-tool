@@ -28,7 +28,9 @@
           </td>
           <td>{{ data.name }}</td>
           <td class="amount">{{ data.amount | currency: '₱' }}</td>
-          <td>{{ data.location }}</td>
+          <td style="text-align: center">
+            <nz-tag [nzColor]="data.location === 'Bank' ? '#2db7f5' : '#87d068'">{{ data.location }}</nz-tag>
+          </td>
           <td>
             <button (click)="onTransfer(data)" nz-button nzType="primary" nzBlock>Transfer</button>
           </td>
