@@ -70,6 +70,18 @@ export class EarningsComponent implements OnInit {
     });
   }
 
+  onTransfer(data: Earning) {
+    this.isSubmitting = true;
+    this.firebase
+      .update('earnings', {
+        [`${data.id}/location`]: data.location === 'Bank' ? 'Onhand' : 'Bank'
+      })
+      .subscribe(() => {
+        this.isSubmitting = false;
+        this.fetchEarnings();
+      });
+  }
+
   getCurrentOrder(index: number) {
     return index + (this.currentPage - 1) * 10;
   }
