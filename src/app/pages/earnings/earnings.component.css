@@ -11,10 +11,6 @@ nz-select {
   display: block;
 }
 
-.amount {
-  text-align: right;
-}
-
 .type {
   text-transform: uppercase;
   font-weight: 700;
