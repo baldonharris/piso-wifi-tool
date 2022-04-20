@@ -1,0 +1,28 @@
+<div nz-row>
+  <div nz-col nzSpan="18"></div>
+  <div nz-col nzSpan="6">
+    <nz-table
+      #basicTable
+      [nzData]="componentNames"
+      [nzHideOnSinglePage]="true"
+      nzSize="small"
+    >
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let component of componentNames">
+          <td>{{ component }}</td>
+          <td class="amount">{{ components[component] | currency: '₱' }}</td>
+          <td>
+            <button nz-button nzType="primary" nzBlock>Add</button>
+          </td>
+        </tr>
+      </tbody>
+  </nz-table>
+  </div>
+</div>

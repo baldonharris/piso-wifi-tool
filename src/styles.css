@@ -37,3 +37,7 @@ input[readonly]:hover {
 .unpaid:hover {
   cursor: auto;
 }
+
+.amount {
+  text-align: right;
+}
