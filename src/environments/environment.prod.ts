@@ -11,7 +11,7 @@ export const environment = {
     'USB to LAN': 330,
     PSU: 500,
     'TP Link 110': 1790,
-    'SD Card': 0,
+    'SD Card': 325,
     'Service Charge': 0,
     'Coinslot LED': 201.5
   },

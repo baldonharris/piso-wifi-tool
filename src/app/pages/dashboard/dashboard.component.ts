@@ -4,6 +4,11 @@ import { environment } from '../../../environments/environment';
 import { UtilsService } from '../../services/utils.service';
 import { Earning } from '../earnings/earnings.component';
 
+interface Comp {
+  name: string;
+  price: number;
+}
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -23,11 +28,39 @@ export class DashboardComponent implements OnInit {
 
   totalInvestments: number = 0;
 
+  components: Comp[] = [];
+  componentsToDisplay: Comp[] = [];
+  componentSearchValue: string = '';
+  visible: boolean = false;
+
   constructor(private firebase: FirebaseService, private utils: UtilsService) {
     this.investors = this.utils.getInvestors('Earnings');
   }
 
+  search(): void {
+    this.visible = false;
+    this.componentsToDisplay = this.components.filter(
+      (item: Comp) => item.name.toLowerCase().indexOf(this.componentSearchValue.toLowerCase()) !== -1
+    );
+  }
+
+  reset(): void {
+    this.componentSearchValue = '';
+    this.search();
+  }
+
   ngOnInit(): void {
+    Object.keys(environment.components)
+      .sort()
+      .forEach((componentName) => {
+        this.components.push({
+          name: componentName,
+          // @ts-ignore
+          price: Number(environment.components[componentName])
+        });
+      });
+    this.componentsToDisplay = [...this.components];
+
     this.firebase.getOrders().subscribe((items: Item[]) => {
       for (let item of items) {
         this.createInvestor(item.paid_by);
